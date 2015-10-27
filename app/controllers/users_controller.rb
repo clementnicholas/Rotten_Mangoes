@@ -24,6 +24,7 @@
           render :new
         end
       end
+      
       protected
 
       def user_params
