@@ -1,7 +1,16 @@
 <h1>Rotten Mangoes</h1>
-<%= link_to "Submit a movie!", new_movie_path %>
+
 <hr>
-<% @users.each do |user| %>
-  <p><%= user.full_name %></p>
-  <hr>
-<% end %>
+<%= paginate @users %>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+  </tr>
+  <% @users.each do |user| %>
+  <tr>
+    <td><%= user.full_name %></td>
+    <td><%= user.email %></td>
+  </tr>
+  <% end %>
+</table>
