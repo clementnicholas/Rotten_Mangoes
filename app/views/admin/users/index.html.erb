@@ -1,1 +1,7 @@
-Hello World
+<h1>Rotten Mangoes</h1>
+<%= link_to "Submit a movie!", new_movie_path %>
+<hr>
+<% @users.each do |user| %>
+  <p><%= user.full_name %></p>
+  <hr>
+<% end %>

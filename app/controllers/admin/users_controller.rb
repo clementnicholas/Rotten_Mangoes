@@ -1,7 +1,7 @@
 class Admin::UsersController < ApplicationController
 
   def new
-    @admin = Admin.new
+    
   end
 
   def create
