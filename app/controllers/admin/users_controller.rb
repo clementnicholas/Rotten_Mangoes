@@ -5,11 +5,9 @@ class Admin::UsersController < AdminController
   end
 
   def create
-    @user = User.new(user_params)
-
+    @user = User.new(user_params) 
     if @user.save
-      session[:user_id] = @user.id
-      redirect_to admin_users_path, notice: "#{@user.full_name} created!"
+      redirect_to admin_users_path, notice: "User: #{@user.full_name} created!"
     else
       render :new
     end
@@ -36,6 +34,12 @@ class Admin::UsersController < AdminController
   def show
     @user = User.find(params[:id])
   end
+
+  def destroy
+    @user = User.find(params[:id])
+    @user.destroy
+    redirect_to admin_users_path, notice: "User: #{@user.full_name} deleted!"
+  end 
 
   protected
 

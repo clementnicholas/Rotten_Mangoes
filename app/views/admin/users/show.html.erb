@@ -1,1 +1,9 @@
-INDIVIDUAL USER CONTENT
+
+<h3><%= @user.full_name %></h3>
+<ul>
+  <li>First name: <%= @user.firstname %></li>
+  <li>Last name: <%= @user.lastname %></li>
+  <li>Email: <%= @user.email %></li>
+</ul>
+<%= link_to "Delete", admin_user_path(@user), method: "delete" %>
+<%= link_to "Edit", edit_admin_user_path(user) %>
