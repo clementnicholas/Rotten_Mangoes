@@ -16,16 +16,5 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
-  def impersonate_user
-    fake_user = User.find(params[:id])
-    session[:user_id] = fake_user.id
-    redirect_to root_path
-  end
-
-  def return_to_admin
-
-  end
-
   helper_method :current_user
-  helper_method :impersonate_user
 end

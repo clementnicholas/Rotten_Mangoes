@@ -8,6 +8,8 @@ RottenMangos::Application.routes.draw do
   root to: 'movies#index'
   namespace :admin do
     resources :users
+    get '/users/impersonate/:id', to: 'users#impersonate_user'
+    get '/return', to: 'users#return_to_admin' 
   end
   namespace :my do
     resources :reviews, only: [:index]
