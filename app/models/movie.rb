@@ -1,23 +1,20 @@
 class Movie < ActiveRecord::Base
 
   has_many :reviews
-
   mount_uploader :poster, PosterUploader
-
   validates :title, presence: true
-
   validates :director, presence: true
-
   validates :runtime_in_minutes, numericality: { only_integer: true }
-
   validates :description, presence: true
-
   validates :poster, presence: true
-
   validates :release_date, presence: true
-
   validate :release_date_is_in_the_past
 
+  scope :title, -> { }
+
+  scope :short, -> { where("runtime_in_minutes < ?", 90) }
+  scope :medium, -> { where("runtime_in_minutes < ? ", 90).where("runtime_in_minutes > ? ", 120) }
+  scope :long, -> { where("runtime_in_minutes > ? ", 120) }
 
   def review_average
     reviews.size > 0 ? reviews.sum(:rating_out_of_ten)/reviews.size : "No reviews."
@@ -25,7 +22,7 @@ class Movie < ActiveRecord::Base
 
 # Search movies based on title and director
 
-  def self.search_title_director(title, director)
+  def self.search_by_title_and_director(title, director)
 # Only search by title if no director param
       if title && director.blank?
         result = self.where("title like ?", "%#{title}%")   
@@ -46,9 +43,9 @@ class Movie < ActiveRecord::Base
 # Only movies with the selected runtime will be output unless no runtime selected
   def self.search_runtime(runtime)
     case runtime
-    when '<90' then self.where("runtime_in_minutes < ?", 90)
-    when '90<x<120' then self.where("runtime_in_minutes < ? ", 90).where("runtime_in_minutes > ? ", 120)
-    when '>120' then self.where("runtime_in_minutes > ? ", 120)
+    when '<90' then short
+    when '90<x<120' then medium
+    when '>120' then long
     else self.all
     end
   end
