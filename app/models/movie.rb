@@ -24,7 +24,7 @@ class Movie < ActiveRecord::Base
   end
 
 
-  def self.search(title, director)
+  def self.search_title_director(title, director)
       # return self.all if title.blank? && director.blank?
       if title && director.blank?
         result = self.where("title like ?", "%#{title}%")      
@@ -34,9 +34,20 @@ class Movie < ActiveRecord::Base
         result = self.where("title like ? or director like ?", "%#{title}%", "%#{director}%") 
       else
         self.all
-      end
-      
+      end      
   end
+
+  def self.search_runtime(runtime)
+    case runtime
+    when '<90' then self.where("runtime_in_minutes < ?", 90)
+    when '90<x<120' then self.where("runtime_in_minutes < ? ", 90).where("runtime_in_minutes > ? ", 120)
+    when '>120' then self.where("runtime_in_minutes > ? ", 120)
+    else self.all
+    end
+  end
+      
+      
+      
 
   protected
 
