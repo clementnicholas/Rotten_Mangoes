@@ -23,20 +23,27 @@ class Movie < ActiveRecord::Base
     reviews.size > 0 ? reviews.sum(:rating_out_of_ten)/reviews.size : "No reviews."
   end
 
+# Search movies based on title and director
 
   def self.search_title_director(title, director)
-      # return self.all if title.blank? && director.blank?
+# Only search by title if no director param
       if title && director.blank?
-        result = self.where("title like ?", "%#{title}%")      
+        result = self.where("title like ?", "%#{title}%")   
+# Only search by director if no title param
       elsif title.blank? && director
         result = self.where("director like ?", "%#{director}%")
+# Search by either if title and director present, print out movies matching either not both
       elsif title && director
         result = self.where("title like ? or director like ?", "%#{title}%", "%#{director}%") 
+# Print all movies if no params passed
       else
         self.all
       end      
   end
 
+# Search movies based on runtime
+# Runtime is a restrictive filter. It ignores/overrides the title/director params
+# Only movies with the selected runtime will be output unless no runtime selected
   def self.search_runtime(runtime)
     case runtime
     when '<90' then self.where("runtime_in_minutes < ?", 90)
