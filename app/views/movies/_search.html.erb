@@ -1,0 +1,6 @@
+<%= form_tag(movies_path, method: "get") do %>
+  <%= label_tag(:search) %>
+  <%= text_field_tag(:search, params[:search]) %>  
+  <%= select_tag(:runtime_in_minutes, options_for_select([['', nil], ['Under 90','<90'], ['Between 90 and 120','90<x<120'], ['Over 120', '>120']]))%>
+  <%= submit_tag "Search" , :name => nil %>
+<% end %>

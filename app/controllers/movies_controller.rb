@@ -1,11 +1,7 @@
 class MoviesController < ApplicationController
 
   def index
-    if !params[:title].blank? && !params[:director].blank?
-      @movies = Movie.search_by_title_and_director(params[:title], params[:director]).search_runtime(params[:runtime_in_minutes])
-    else
-      @movies = Movie.all
-    end
+    params[:search].blank? && params[:runtime_in_minutes].blank? ? @movies = Movie.all : @movies = Movie.search(params[:search]).search_runtime(params[:runtime_in_minutes])
   end
 
   def show

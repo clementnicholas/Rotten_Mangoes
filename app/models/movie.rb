@@ -10,8 +10,6 @@ class Movie < ActiveRecord::Base
   validates :release_date, presence: true
   validate :release_date_is_in_the_past
 
-  scope :title, -> { }
-
   scope :short, -> { where("runtime_in_minutes < ?", 90) }
   scope :medium, -> { where("runtime_in_minutes < ? ", 90).where("runtime_in_minutes > ? ", 120) }
   scope :long, -> { where("runtime_in_minutes > ? ", 120) }
@@ -22,20 +20,8 @@ class Movie < ActiveRecord::Base
 
 # Search movies based on title and director
 
-  def self.search_by_title_and_director(title, director)
-# Only search by title if no director param
-      if title && director.blank?
-        result = self.where("title like ?", "%#{title}%")   
-# Only search by director if no title param
-      elsif title.blank? && director
-        result = self.where("director like ?", "%#{director}%")
-# Search by either if title and director present, print out movies matching either not both
-      elsif title && director
-        result = self.where("title like ? or director like ?", "%#{title}%", "%#{director}%") 
-# Print all movies if no params passed
-      else
-        self.all
-      end      
+  def self.search(search)
+    where("title like ? or director like ?", "%#{search}%", "%#{search}%")
   end
 
 # Search movies based on runtime
