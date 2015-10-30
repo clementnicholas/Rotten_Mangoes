@@ -1,1 +1,21 @@
-<h3><%= @user.full_name %></h3>
+<h1><%= @user.full_name %></h1>
+<h3><%= @user.email %></h3>
+<hr>
+<h3>Your Reviews</h3>
+
+<% @user.reviews.each do |review| %>
+<div>
+  <div>
+    <% @movie = Movie.find(review.movie_id) %>
+    <h2>Title: <%= link_to "#{@movie.title}", movie_path(@movie) %></h2
+    <h4>Director: <%= @movie.director %></h4>
+  </div>
+  <div>  
+    <%= link_to image_tag(@movie.poster_url(:banner).to_s), movie_path(@movie) %>
+  </div>
+  <div>
+    <p>Score: <%= review.rating_out_of_ten %></p>
+    <p>Review: <%= review.text %></p>
+  </div>
+</div>
+<% end %>
