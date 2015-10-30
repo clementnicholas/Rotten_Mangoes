@@ -1,6 +1,6 @@
 class Review < ActiveRecord::Base
   belongs_to :user
-  belongs_to :movie
+  belongs_to :movie, foreign_key: 'movie_id'
 
   validates :user, presence: true
 

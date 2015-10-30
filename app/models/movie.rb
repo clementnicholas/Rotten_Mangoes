@@ -23,6 +23,21 @@ class Movie < ActiveRecord::Base
     reviews.size > 0 ? reviews.sum(:rating_out_of_ten)/reviews.size : "No reviews."
   end
 
+
+  def self.search(title, director)
+      # return self.all if title.blank? && director.blank?
+      if title && director.blank?
+        result = self.where("title like ?", "%#{title}%")      
+      elsif title.blank? && director
+        result = self.where("director like ?", "%#{director}%")
+      elsif title && director
+        result = self.where("title like ? or director like ?", "%#{title}%", "%#{director}%") 
+      else
+        self.all
+      end
+      
+  end
+
   protected
 
   def release_date_is_in_the_past

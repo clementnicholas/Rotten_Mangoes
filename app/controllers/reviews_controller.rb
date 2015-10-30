@@ -18,6 +18,8 @@ class ReviewsController < ApplicationController
     end
   end
 
+  
+
   protected
 
   def load_movie

@@ -1,0 +1,10 @@
+<h1> Edit Your Profile </h1>
+
+<%= form_for @user, url: my_profile_path do |f| %>
+
+  <%= render f %>
+  <%= render 'extra_fields', f: f %>
+
+  <%= f.submit 'Update' %>
+
+<% end %>
