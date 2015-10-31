@@ -7,9 +7,10 @@ RottenMangos::Application.routes.draw do
   resource :session, only: [:new, :create, :destroy]
   root to: 'movies#index'
   namespace :admin do
-    resources :users
-    get '/users/impersonate/:id', to: 'users#impersonate_user'
-    get '/return', to: 'users#return_to_admin' 
+    resources :users do
+      post :impersonate, on: :member
+      post :return, on: :collection 
+    end
   end
   namespace :my do
     resources :reviews, only: [:index]

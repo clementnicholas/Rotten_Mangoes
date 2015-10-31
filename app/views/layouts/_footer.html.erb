@@ -6,7 +6,7 @@
         <%= link_to "Admin", admin_users_path %> | <%= link_to "Movies", movies_path %>
       <% end %>
       <% if !session[:admin_user_id].nil? %>
-        <%= link_to "Back to Admin", '/admin/return' %>
+        <%= link_to "Back to Admin", return_admin_users_path, method: :post %>
       <% end %>
     <% else %>
       <%= link_to "Log In", new_session_path %> | <%= link_to "Sign Up", new_user_path %>
